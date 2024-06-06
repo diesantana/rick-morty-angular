@@ -1,28 +1,39 @@
 <div class="search-bar row align-items-center justify-content-center  m-md-1 m-3">
   <div class="col-md-4 col-10">
-    <select class="form-select" [(ngModel)]="selectedList">
+    <select class="form-select" [(ngModel)]="selectedList" (change)="onFilterChange()">
       <option *ngFor="let item of lists" [value]="item">{{ item }}</option>
     </select>
   </div>
   <div class="col-md-8 col-10 mt-3 mt-md-0 justify-content-center">
     <div class="d-flex align-items-center justify-content-md-end justify-content-center">
-      <input type="text" class="form-control" [(ngModel)]="userInput" placeholder="Enter value">
-      <button class="btn btn-primary ms-2" (click)="onSearch()">Search</button>
+
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="userInput"
+        placeholder="Filter by name..."
+        (keyup)="onFilterChange()">
+
+        <!-- Spinner -->
+      <div *ngIf="isLoading" class="ms-2">
+        <div class="spinner-border text-primary spinner-border-lg" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 <div class="box-filters col-md-8 col-10 m-3" *ngIf="selectedList === 'Characters'">
   <div class="d-flex justify-content-start">
-    <select class="form-select">
-      <option value="" default>Genero</option>
+    <select class="form-select" [(ngModel)]="selectedGender" (change)="onFilterChange()">
+      <option value="" default>Gender</option>
       <option *ngFor="let gender of genders" value="{{gender}}">{{gender | titlecase }}</option>
     </select>
 
-      <select class="form-select" name="status">
+      <select class="form-select" [(ngModel)]="selectedStatus" (change)="onFilterChange()">
         <option value="" default>Status</option>
         <option *ngFor="let item of status" value="{{item}}">{{item | titlecase }}</option>
     </select>
   </div>
 </div>
-
