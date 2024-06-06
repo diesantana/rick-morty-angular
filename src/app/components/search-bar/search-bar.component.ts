@@ -20,23 +20,33 @@ export class SearchBarComponent {
   selectedStatus: string = '';
   userInput: string = '';
   isLoading: boolean = false;
+  errorMessage: string = '';
 
   constructor(private rickMortyService: RickMortyService){}
 
   onSearch(): void {
     if(this.selectedList === 'Characters') {
       this.isLoading = true; // ativa o spinner
+
       const params = {
         name: this.userInput,
         gender: this.selectedGender,
         status: this.selectedStatus
       };
-      this.rickMortyService.getAllCharacters(params).subscribe((data: IApiResponse<ICharacter>) => {
-        console.log("Search response:");
-        console.log(data.results);
+
+      this.rickMortyService.getAllCharacters(params).subscribe(
+        (data: IApiResponse<ICharacter>) => {
         this.searchSuccess.emit(data);  // Emitindo o evento com os resultados da pesquisa
         this.isLoading = false;  // desativa o spinner
-      });
+        this.errorMessage = ""; // limpa os erros em caso de sucessos
+        },
+        (error: string) => {
+          this.errorMessage = error;
+          // Emitir o evento com uma empty list em caso de erro
+          this.searchSuccess.emit({ results: []} as unknown  as IApiResponse<ICharacter>);
+          this.isLoading = false;  // desativa o spinner
+      }
+    );
     }
   }
 
