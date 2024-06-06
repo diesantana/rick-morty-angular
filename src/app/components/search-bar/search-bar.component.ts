@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { RickMortyService } from '../../services/rick-morty.service';
 import { IApiResponse } from '../../models/api-response.interface';
 import { ICharacter } from '../../models/character.interface';
@@ -9,6 +9,8 @@ import { ICharacter } from '../../models/character.interface';
   styleUrl: './search-bar.component.css'
 })
 export class SearchBarComponent {
+  //Define uma propriedade de saída que emitirá eventos para o componente pai.
+  @Output() searchSuccess: EventEmitter<IApiResponse<ICharacter>> = new EventEmitter<IApiResponse<ICharacter>>;
   lists: string[] = ['Characters', 'Episodes', 'Locations'];
   genders: string[] = ['female', 'male', 'genderless', 'unknown'];
   status: string[] = ['alive', 'dead', 'unknown'];
@@ -17,22 +19,30 @@ export class SearchBarComponent {
   selectedGender: string = '';
   selectedStatus: string = '';
   userInput: string = '';
+  isLoading: boolean = false;
 
   constructor(private rickMortyService: RickMortyService){}
 
-  onSearch(): void { // onsearch
-    if(this.selectedList === this.lists[0]) {
+  onSearch(): void {
+    if(this.selectedList === 'Characters') {
+      this.isLoading = true; // ativa o spinner
       const params = {
         name: this.userInput,
         gender: this.selectedGender,
         status: this.selectedStatus
       };
-
       this.rickMortyService.getAllCharacters(params).subscribe((data: IApiResponse<ICharacter>) => {
         console.log("Search response:");
         console.log(data.results);
+        this.searchSuccess.emit(data);  // Emitindo o evento com os resultados da pesquisa
+        this.isLoading = false;  // desativa o spinner
       });
     }
-  } // onsearch edn
+  }
+
+  // Método para ser chamado em eventos de input ou change
+  onFilterChange(): void {
+    this.onSearch();
+  }
 
 }
