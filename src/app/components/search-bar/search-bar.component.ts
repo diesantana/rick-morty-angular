@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { RickMortyService } from '../../services/rick-morty.service';
+import { IApiResponse } from '../../models/api-response.interface';
+import { ICharacter } from '../../models/character.interface';
 
 @Component({
   selector: 'app-search-bar',
@@ -6,38 +9,30 @@ import { Component } from '@angular/core';
   styleUrl: './search-bar.component.css'
 })
 export class SearchBarComponent {
-  lists: string[] = ['Buscar por:', 'Characters', 'Episodes', 'Locations'];
+  lists: string[] = ['Characters', 'Episodes', 'Locations'];
   genders: string[] = ['female', 'male', 'genderless', 'unknown'];
   status: string[] = ['alive', 'dead', 'unknown'];
 
   selectedList: string = this.lists[0]; // Valor padrão
-  selectedGender: string = this.genders[0]; // Valor padrão
-  selectedStatus: string = this.status[0]; // Valor padrão
-
+  selectedGender: string = '';
+  selectedStatus: string = '';
   userInput: string = '';
-  showInput: boolean = false;
 
-  toggleInput(): void {
-    if(this.selectedList == this.lists[0]) {
-      this.showInput = false;
-      this.userInput = ''; // Limpa o input se voltar para o valor padrão
-    } else{
-      this.showInput = true;
+  constructor(private rickMortyService: RickMortyService){}
+
+  onSearch(): void { // onsearch
+    if(this.selectedList === this.lists[0]) {
+      const params = {
+        name: this.userInput,
+        gender: this.selectedGender,
+        status: this.selectedStatus
+      };
+
+      this.rickMortyService.getAllCharacters(params).subscribe((data: IApiResponse<ICharacter>) => {
+        console.log("Search response:");
+        console.log(data.results);
+      });
     }
-  }
-
-  onSearch(): void {
-    // pega a lista que o user selecionar
-    let searchParams = this.selectedList;
-
-    // aqui você vai criar as lógicas de busca
-    if (this.showInput && this.userInput.trim() !== '') {
-
-      searchParams += ` ${this.userInput.trim()}`;
-    }
-    // this.searchService.setSearchTerm(searchTerm);
-    console.log(this.userInput);
-    this.userInput = ''; // Limpa o input se voltar para o valor padrão
-  }
+  } // onsearch edn
 
 }
