@@ -1,45 +1,10 @@
 <app-search-bar></app-search-bar>
 <div class="container">
   <div class="row">
-    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-      <!-- Inclua aqui o card-component -->
-       <app-character-card></app-character-card>
+
+    <div *ngFor="let character of characters" class="col-lg-3 col-md-4 col-sm-6 mb-4">
+       <app-character-card [character]="character"></app-character-card>
     </div>
-    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-      <!-- Inclua aqui o card-component -->
-       <app-character-card></app-character-card>
-    </div>
-    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-      <!-- Inclua aqui o card-component -->
-       <app-character-card></app-character-card>
-    </div>
-    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-      <!-- Inclua aqui o card-component -->
-       <app-character-card></app-character-card>
-    </div>
-    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-      <!-- Inclua aqui o card-component -->
-       <app-character-card></app-character-card>
-    </div>
-    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-      <!-- Inclua aqui o card-component -->
-       <app-character-card></app-character-card>
-    </div>
-    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-      <!-- Inclua aqui o card-component -->
-       <app-character-card></app-character-card>
-    </div>
-    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-      <!-- Inclua aqui o card-component -->
-       <app-character-card></app-character-card>
-    </div>
-    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-      <!-- Inclua aqui o card-component -->
-       <app-character-card></app-character-card>
-    </div>
-    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-      <!-- Inclua aqui o card-component -->
-       <app-character-card></app-character-card>
-    </div>
+
   </div>
 </div>
