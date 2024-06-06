@@ -1,7 +1,7 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { ICharacter } from '../models/character.interface';
 import { IApiResponse } from '../models/api-response.interface';
 import { ISearchParams } from '../models/search-params.interface';
@@ -26,7 +26,17 @@ export class RickMortyService {
       }
     }
     //Faz a requisição HTTP GET com os parâmetros (se houver)
-    return this.http.get<IApiResponse<ICharacter>>(`${this.baseUrl}/character/`, {params: httpParams});
+    return this.http.get<IApiResponse<ICharacter>>(`${this.baseUrl}/character/`, {params: httpParams}).pipe(
+      catchError((error: HttpErrorResponse) => {
+        let errorMessage = '';
+        if(error.status === 404) {
+          errorMessage = 'Nenhum dado foi encontrado';
+        } else {
+          errorMessage = 'Erro não esperado';
+        }
+        return throwError(() => new Error(errorMessage));
+      })
+    );
   }
 
 }
