@@ -17,10 +17,15 @@ export class CharacterListComponent implements OnInit {
     this.getAll();
   }
 
-  getAll() {
-    this.rickMortyService.getAllCharacters().subscribe((data: IApiResponse<ICharacter>) => {
+  getAll(): void {
+    const params = {name: '', gender: '', status: ''};
+    this.rickMortyService.getAllCharacters(params).subscribe((data: IApiResponse<ICharacter>) => {
       this.characters = data.results;
     });
+  }
+
+  handleSearchSuccess(data: IApiResponse<ICharacter>): void {
+    this.characters = data.results; // Atualiza a lista de personagens com os resultados da pesquisa
   }
 
 
