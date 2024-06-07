@@ -9,9 +9,11 @@ import { IApiResponse } from '../../models/api-response.interface';
   styleUrl: './character-list.component.css'
 })
 export class CharacterListComponent implements OnInit {
+
   characters: ICharacter[] = [];
   page: number = 1;
   searchParams: any = {};
+  hasMorePages: boolean = true; // verifica se há mais páginas
 
   constructor(private rickMortyService: RickMortyService) {
   }
@@ -24,6 +26,7 @@ export class CharacterListComponent implements OnInit {
   handleSearchSuccess(data: IApiResponse<ICharacter>): void {
     this.characters = data.results;
     this.page = 1; // Reseta a página ao fazer uma nova busca
+    this.hasMorePages = data.info.next !== null;
   }
 
   // Atualiza os parâmetros de busca e faz a requisição inicial
@@ -35,14 +38,20 @@ export class CharacterListComponent implements OnInit {
 
   // Carrega personagens com base nos parâmetros de busca e na página atual
   loadCharacters(): void {
-    // Combina os parâmetros de busca atuais com a página atual usando o operador de espalhamento
+
+    if(!this.hasMorePages) {
+      return; // Se não há mais páginas, não faz a requisição
+    }
+
     const params = {...this.searchParams, page: this.page};
+
     this.rickMortyService.getAllCharacters(params).subscribe((data: IApiResponse<ICharacter>) => {
       if(this.page === 1) {
         this.characters = data.results;
       } else {
         this.characters = [...this.characters, ...data.results];
       }
+      this.hasMorePages = data.info.next !== null;
     });
   }
 
