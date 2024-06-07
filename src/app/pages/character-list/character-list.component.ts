@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ICharacter } from '../../models/character.interface';
 import { RickMortyService } from '../../services/rick-morty.service';
 import { IApiResponse } from '../../models/api-response.interface';
+import { ISearchParams } from '../../models/search-params.interface';
+import { IEpisode } from '../../models/episode.interface';
 
 @Component({
   selector: 'app-character-list',
@@ -9,28 +11,28 @@ import { IApiResponse } from '../../models/api-response.interface';
   styleUrl: './character-list.component.css'
 })
 export class CharacterListComponent implements OnInit {
-
+  currentList: string = 'Characters';
   characters: ICharacter[] = [];
   page: number = 1;
-  searchParams: any = {};
-  hasMorePages: boolean = true; // verifica se há mais páginas
+  searchParams: ISearchParams = {};
+  hasMorePages: boolean = true;
 
   constructor(private rickMortyService: RickMortyService) {
   }
 
-  ngOnInit(): void {
-    // A busca inicial será feita pelo SearchBarComponent
-  }
+  ngOnInit(): void { }
 
-  // Atualiza a lista de personagens com os resultados da pesquisa
+  // Atualiza a lista com os resultados de busca
   handleSearchSuccess(data: IApiResponse<ICharacter>): void {
     this.characters = data.results;
-    this.page = 1; // Reseta a página ao fazer uma nova busca
-    this.hasMorePages = data.info.next !== null;
+    // Reseta a página ao fazer uma nova busca
+    this.page = 1;
+    // Verifica se data.info existe antes de acessar next
+    this.hasMorePages = data.info && data.info.next !== null;
   }
 
   // Atualiza os parâmetros de busca e faz a requisição inicial
-  handleSearchParams(params: any): void {
+  handleSearchParams(params: ISearchParams): void {
     this.searchParams = params;
     this.page = 1; // Reseta a página ao fazer uma nova busca
     this.loadCharacters();
@@ -38,28 +40,27 @@ export class CharacterListComponent implements OnInit {
 
   // Carrega personagens com base nos parâmetros de busca e na página atual
   loadCharacters(): void {
-
-    if(!this.hasMorePages) {
+    if (!this.hasMorePages) {
       return; // Se não há mais páginas, não faz a requisição
     }
 
-    const params = {...this.searchParams, page: this.page};
+    const params = { ...this.searchParams, page: this.page };
 
-    this.rickMortyService.getAllCharacters(params).subscribe((data: IApiResponse<ICharacter>) => {
-      if(this.page === 1) {
-        this.characters = data.results;
-      } else {
-        this.characters = [...this.characters, ...data.results];
+    this.rickMortyService.getAllCharacters(params).subscribe({
+      next: (data: IApiResponse<ICharacter>) => {
+        if (this.page === 1) {
+          this.characters = data.results;
+        } else {
+          this.characters = [...this.characters, ...data.results];
+        }
+        this.hasMorePages = data.info && data.info.next !== null;
       }
-      this.hasMorePages = data.info.next !== null;
     });
   }
 
   // Incrementa a página e carrega mais personagens ao rolar a lista
-  onScroll() {
+  onScroll(): void {
     this.page++;
-    console.log("scrolled!!");
-    console.log(this.page);
     this.loadCharacters();
   }
 
