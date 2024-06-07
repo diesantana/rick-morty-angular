@@ -15,6 +15,8 @@ import { CharacterCardComponent } from './components/character-card/character-ca
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { EpisodeListComponent } from './pages/episode-list/episode-list.component';
+import { EpisodeTableComponent } from './components/episode-table/episode-table.component';
 
 
 @NgModule({
@@ -29,6 +31,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     ProfileComponent,
     SearchBarComponent,
     CharacterCardComponent,
+    EpisodeListComponent,
+    EpisodeTableComponent,
   ],
   imports: [
     BrowserModule,
