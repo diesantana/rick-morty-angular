@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ICharacter } from '../../models/character.interface';
+import { CharacterService } from '../../services/character.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-character-card',
@@ -8,4 +10,13 @@ import { ICharacter } from '../../models/character.interface';
 })
 export class CharacterCardComponent {
   @Input() character!: ICharacter;
+
+  constructor(private characterService: CharacterService, private router: Router){}
+
+  // Método para navegar para os detalhes do personagem e armazenar os detalhes no serviço
+  navigateToDetails(character: ICharacter): void {
+    this.characterService.setCharacterDetails(character); // Armazena os detalhes do personagem
+    this.router.navigate(['/characters', character.id]); // Navega para a página de detalhes do personagem
+  }
+
 }
