@@ -5,6 +5,7 @@ import { Observable, catchError, throwError } from 'rxjs';
 import { ICharacter } from '../models/character.interface';
 import { IApiResponse } from '../models/api-response.interface';
 import { ISearchParams } from '../models/search-params.interface';
+import { IEpisode } from '../models/episode.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +38,28 @@ export class RickMortyService {
         return throwError(() => new Error(errorMessage));
       })
     );
+  }
+
+  getAllEpisodes(id: string): Observable<IApiResponse<IEpisode>> {
+    return this.http.get<IApiResponse<IEpisode>>(`${this.baseUrl}/episode/${id}`).pipe(
+      catchError((error: HttpErrorResponse) => {
+        let errorMessage = '';
+        if(error.status === 404) {
+          errorMessage = 'Nenhum dado foi encontrado';
+        } else {
+          errorMessage = 'Erro não esperado';
+        }
+        return throwError(() => new Error(errorMessage));
+      })
+    );
+  }
+
+  getNextEpisodes(nextUrl: string): Observable<IApiResponse<IEpisode>>  {
+    return this.http.get<IApiResponse<IEpisode>>(nextUrl);
+  }
+
+  getPrevEpisodes(prevUrl: string): Observable<IApiResponse<IEpisode>>  {
+    return this.http.get<IApiResponse<IEpisode>>(prevUrl);
   }
 
 }
