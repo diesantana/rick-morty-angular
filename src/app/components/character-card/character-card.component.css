@@ -1,6 +1,7 @@
 .card-link {
   text-decoration: none;
   color: inherit; /* Mantém a cor do texto */
+  cursor: pointer;
 }
 
 .card {
