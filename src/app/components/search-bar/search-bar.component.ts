@@ -1,7 +1,9 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { RickMortyService } from '../../services/rick-morty.service';
 import { IApiResponse } from '../../models/api-response.interface';
 import { ICharacter } from '../../models/character.interface';
+import { ISearchParams } from '../../models/search-params.interface';
+import { IEpisode } from '../../models/episode.interface';
 
 @Component({
   selector: 'app-search-bar',
@@ -9,15 +11,15 @@ import { ICharacter } from '../../models/character.interface';
   styleUrl: './search-bar.component.css'
 })
 export class SearchBarComponent implements OnInit {
-  //Define uma propriedade de saída que emitirá eventos para o componente pai.
-  @Output() searchSuccess: EventEmitter<IApiResponse<ICharacter>> = new EventEmitter<IApiResponse<ICharacter>>();
-  @Output() searchParams: EventEmitter<any> = new EventEmitter<any>();
+  @Output() searchSuccess: EventEmitter<IApiResponse<any>> = new EventEmitter<IApiResponse<any>>();
+  @Output() searchParams: EventEmitter<ISearchParams> = new EventEmitter<ISearchParams>();
+  @Output() responseEpisode: EventEmitter<IApiResponse<IEpisode>> = new EventEmitter<IApiResponse<IEpisode>>();
 
-  lists: string[] = ['Characters', 'Episodes', 'Locations'];
   genders: string[] = ['female', 'male', 'genderless', 'unknown'];
   status: string[] = ['alive', 'dead', 'unknown'];
+  textPlaceholder: string = 'Filter by name...';
 
-  selectedList: string = this.lists[0]; // Valor padrão
+  @Input() currentList!: string;
   selectedGender: string = '';
   selectedStatus: string = '';
   userInput: string = '';
@@ -27,36 +29,23 @@ export class SearchBarComponent implements OnInit {
   constructor(private rickMortyService: RickMortyService){}
 
   ngOnInit(): void {
-    this.emitSearchParams();
+    if(this.currentList === 'Characters') {
+      this.emitSearchParams();
+    }
     this.onSearch(); // Realiza a busca inicial ao carregar
   }
 
   onSearch(): void {
-    if(this.selectedList === 'Characters') {
-      this.isLoading = true; // ativa o spinner
-
-      const params = {name: this.userInput, gender: this.selectedGender, status: this.selectedStatus};
-
-      this.searchParams.emit(params); // Emite os parâmetros de busca
-
-      this.rickMortyService.getAllCharacters(params).subscribe(
-        (data: IApiResponse<ICharacter>) => {
-          this.searchSuccess.emit(data);  // Emitindo o evento com os resultados da pesquisa
-          this.isLoading = false;  // desativa o spinner
-          this.errorMessage = ""; // limpa os erros em caso de sucessos
-        },
-        (error: string) => {
-          this.errorMessage = error;
-          // Emitir o evento com uma empty list em caso de erro
-          this.searchSuccess.emit({ results: []} as unknown  as IApiResponse<ICharacter>);
-          this.isLoading = false;  // desativa o spinner
-        }
-      );
+    if(this.currentList === 'Characters') {
+      this.findCharacters();
+    } else if(this.currentList === 'Episodes') {
+      this.getEpisodes();
     }
   }
 
   // Método para ser chamado em eventos de input ou change
   onFilterChange(): void {
+    this.setPlaceholder();
     this.onSearch();
   }
 
@@ -67,6 +56,53 @@ export class SearchBarComponent implements OnInit {
       status: this.selectedStatus
     };
     this.searchParams.emit(params);
+  }
+
+  setPlaceholder(): void{
+    if(this.currentList === 'Characters') {
+      this.textPlaceholder= 'Filter by name...';
+    } else {
+      this.textPlaceholder= 'Filter by id...';
+    }
+  }
+
+  findCharacters(): void {
+    this.isLoading = true;
+    const params = {name: this.userInput, gender: this.selectedGender, status: this.selectedStatus};
+    this.searchParams.emit(params); // Emite os parâmetros de busca
+
+    this.rickMortyService.getAllCharacters(params).subscribe({
+      next: (data: IApiResponse<ICharacter>) => {
+        this.searchSuccess.emit(data);  // Emitindo o evento com os resultados da pesquisa
+        this.isLoading = false;
+        this.errorMessage = "";
+      },
+      error: (error: string) => {
+        this.errorMessage = error;
+        // Emitir o evento com uma empty list em caso de erro
+        this.searchSuccess.emit({ results: []} as unknown  as IApiResponse<ICharacter>);
+        this.isLoading = false;
+      }
+    });
+
+  }
+
+  getEpisodes(): void {
+    this.isLoading = true;
+    this.rickMortyService.getAllEpisodes(this.userInput).subscribe({
+      next: (data: IApiResponse<IEpisode>) => {
+        this.responseEpisode.emit(data);  // Emitindo o evento com os resultados da pesquisa
+        this.isLoading = false;
+        this.errorMessage = "";
+      },
+      error: (error: string) => {
+        this.errorMessage = error;
+        // Emitir o evento com uma empty list em caso de erro
+        this.responseEpisode.emit({ results: []} as unknown  as IApiResponse<IEpisode>);
+        this.isLoading = false;
+      }
+    });
+
   }
 
 }
