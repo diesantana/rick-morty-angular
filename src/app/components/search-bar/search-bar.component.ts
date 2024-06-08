@@ -33,6 +33,7 @@ export class SearchBarComponent implements OnInit {
       this.emitSearchParams();
     }
     this.onSearch(); // Realiza a busca inicial ao carregar
+    this.setPlaceholder();
   }
 
   onSearch(): void {
