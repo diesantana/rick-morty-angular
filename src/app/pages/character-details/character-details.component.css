@@ -3,6 +3,7 @@
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
+  margin: 2rem auto;
 }
 
 .container h2 {
@@ -24,3 +25,4 @@ p {
   border-right: 3px solid #E0E0E0;
   padding-right: 20px;
 }
+
