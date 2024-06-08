@@ -40,7 +40,7 @@ export class RickMortyService {
     );
   }
 
-  getAllEpisodes(id: string): Observable<IApiResponse<IEpisode>> {
+  getAllEpisodes(id?: string): Observable<IApiResponse<IEpisode>> {
     return this.http.get<IApiResponse<IEpisode>>(`${this.baseUrl}/episode/${id}`).pipe(
       catchError((error: HttpErrorResponse) => {
         let errorMessage = '';
