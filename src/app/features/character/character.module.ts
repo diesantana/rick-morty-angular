@@ -5,7 +5,7 @@ import { CharacterDetailsComponent } from './character-details/character-details
 import { CharacterListComponent } from './character-list/character-list.component';
 import { CharacterService } from './services/character.service';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { FormsModule } from '@angular/forms';
+import { SharedModule } from '../../shared/shared.module';
 
 
 
@@ -18,6 +18,7 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     InfiniteScrollModule,
+    SharedModule
   ],
   providers: [
     CharacterService
