@@ -1,11 +1,11 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../../environments/environment.development';
 import { Observable, catchError, throwError } from 'rxjs';
-import { ICharacter } from '../models/character.interface';
-import { IApiResponse } from '../models/api-response.interface';
-import { ISearchParams } from '../models/search-params.interface';
-import { IEpisode } from '../models/episode.interface';
+import { ICharacter } from '../../features/character/models/character.interface';
+import { IApiResponse } from '../../shared/models/api-response.interface';
+import { ISearchParams } from '../../shared/models/search-params.interface';
+import { IEpisode } from '../../features/episode/models/episode.interface';
 
 @Injectable({
   providedIn: 'root'
