@@ -3,21 +3,38 @@
     <div class="row justify-content-md-center">
       <div class="col-12 col-md-11 col-lg-8 col-xl-7 col-xxl-6">
         <div class="bg-white p-4 p-md-5 rounded shadow-sm">
-          <form>
+          <form [formGroup]="loginForm">
             <div class="text-center mb-4">
               <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
             </div>
-
+            <!-- div input email -->
             <div class="form-floating mb-4">
-              <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+              <input formControlName="email" type="email" class="form-control"
+                [class.is-invalid]="loginForm.get('email')?.errors && loginForm.get('email')?.touched"
+                id="floatingInput" placeholder="name@example.com">
               <label for="floatingInput">Email</label>
-            </div>
-            <div class="form-floating mb-4">
-              <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-              <label for="floatingPassword">Password</label>
+              <!-- validação de erro -->
+              <div *ngIf="loginForm.get('email')?.hasError('required')" class="invalid-feedback">
+                O campo email é obrigatório
+              </div>
+              <div *ngIf="loginForm.get('email')?.hasError('email')" class="invalid-feedback">
+                Digite um email válido
+              </div>
             </div>
 
-            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+            <!-- div input password -->
+            <div class="form-floating mb-4">
+              <input formControlName="password" type="password" class="form-control is-invalid"
+                [class.is-invalid]="loginForm.get('password')?.errors && loginForm.get('password')?.touched"
+                id="floatingPassword" placeholder="Password">
+              <label for="floatingPassword">Password</label>
+              <!-- mensagens de erro -->
+              <div *ngIf="loginForm.get('password')?.hasError('required')" class="invalid-feedback">
+                O campo password é obrigatório
+              </div>
+            </div>
+
+            <button (click)="submitForm()" [disabled]="loginForm.invalid" class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
           </form>
 
         </div>
@@ -25,5 +42,3 @@
     </div>
   </div>
 </div>
-
-
