@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { SessionService } from '../../services/session.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,9 +12,14 @@ import { AuthService } from '../../services/auth.service';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup = new FormGroup({});
   loginError: boolean = false;
-  userData: any = null;
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private sessionService: SessionService,
+    private router: Router
+
+  ) { }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -30,16 +37,14 @@ export class LoginComponent implements OnInit {
       const { email, password} = this.loginForm.value;
       this.authService.login(email, password).subscribe( user => {
         if(user) {
-          console.log('Login successfull', user);
-          this.userData = user;
+          this.sessionService.setUser(user);
           this.loginError = false;
-          // redirecionar outra página ou armazenar os dados do usuário aqui...
+          this.router.navigate(['/profile']);
         } else {
           this.loginError = true;
         }
       });
     }
-    console.log(this.loginForm.value);
     this.loginForm.reset();
   }
 
