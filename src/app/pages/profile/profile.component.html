@@ -1,1 +1,17 @@
-<p>profile works!</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-10 main-content">
+      <h1>Bem-vindo(a) John Doe</h1>
+      <div class="row mt-3">
+        <div class="col-md-4" *ngFor="let item of dataDashboard">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{item.data}}</h5>
+              <p class="card-text"> {{item.value}} </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
