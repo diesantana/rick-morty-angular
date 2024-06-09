@@ -1,17 +1,15 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-10 main-content">
-      <h1>Bem-vindo(a) John Doe</h1>
-      <div class="row mt-3">
-        <div class="col-md-4" *ngFor="let item of dataDashboard">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">{{item.data}}</h5>
-              <p class="card-text"> {{item.value}} </p>
-            </div>
-          </div>
-        </div>
+<div class="container mt-5">
+  <div class="card">
+      <div class="card-header">
+          <h3>Perfil do Usuário</h3>
       </div>
-    </div>
+      <div class="card-body">
+          <h5 class="card-title">Nome da Pessoa</h5>
+          <ul class="list-group list-group-flush">
+              <li class="list-group-item"><strong>Nome:</strong> João Silva</li>
+              <li class="list-group-item"><strong>Email:</strong> joao.silvaexample.com</li>
+          </ul>
+          <button href="#" class="btn btn-danger mt-3">Sair</button>
+      </div>
   </div>
 </div>
