@@ -1,6 +1,4 @@
-/* dashboard.component.css */
-div.container-fluid {
-  min-height: 400px;
-  background-color: #f8f9fa;
-  padding: 2rem;
+div.container{
+  width: 100vw;
+  height: 100vh;
 }
