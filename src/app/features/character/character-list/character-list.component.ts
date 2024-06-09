@@ -4,6 +4,11 @@ import { ISearchParams } from '../../../shared/models/search-params.interface';
 import { RickMortyService } from '../../../core/services/rick-morty.service';
 import { IApiResponse } from '../../../shared/models/api-response.interface';
 
+/**
+ * Componente de lista de personagens da aplicação.
+ * Exibe uma lista de personagens, com opções de busca e paginação.
+ */
+
 @Component({
   selector: 'app-character-list',
   templateUrl: './character-list.component.html',
@@ -21,23 +26,32 @@ export class CharacterListComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  // Atualiza a lista com os resultados de busca
+  /**
+ * Atualiza a lista com os resultados de busca.
+ *
+ * @param data Dados da resposta da API, contendo a lista de personagens.
+ */
   handleSearchSuccess(data: IApiResponse<ICharacter>): void {
     this.characters = data.results;
-    // Reseta a página ao fazer uma nova busca
     this.page = 1;
-    // Verifica se data.info existe antes de acessar next
+    // Verifica se há mais páginas disponíveis
     this.hasMorePages = data.info && data.info.next !== null;
   }
 
-  // Atualiza os parâmetros de busca e faz a requisição inicial
+  /**
+   * Atualiza os parâmetros de busca e faz a requisição inicial.
+   *
+   * @param params Novos parâmetros de busca.
+   */
   handleSearchParams(params: ISearchParams): void {
     this.searchParams = params;
-    this.page = 1; // Reseta a página ao fazer uma nova busca
+    this.page = 1;
     this.loadCharacters();
   }
 
-  // Carrega personagens com base nos parâmetros de busca e na página atual
+  /**
+ * Carrega os personagens com base nos parâmetros de busca e página atual.
+ */
   loadCharacters(): void {
     if (!this.hasMorePages) {
       return; // Se não há mais páginas, não faz a requisição
@@ -57,7 +71,9 @@ export class CharacterListComponent implements OnInit {
     });
   }
 
-  // Incrementa a página e carrega mais personagens ao rolar a lista
+  /**
+ * Carrega mais personagens ao rolar a lista.
+ */
   onScroll(): void {
     this.page++;
     this.loadCharacters();
