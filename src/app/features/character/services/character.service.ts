@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ICharacter } from '../models/character.interface';
 /*
-  serviço para armazenar os detalhes do personagem
+ * serviço para controlar o estado atual do personagem
 */
 @Injectable()
 export class CharacterService {
