@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IApiResponse } from '../../models/api-response.interface';
 import { ISearchParams } from '../../models/search-params.interface';
-import { IEpisode } from '../../models/episode.interface';
+import { IEpisode } from '../../../features/episode/models/episode.interface';
 import { RickMortyService } from '../../../core/services/rick-morty.service';
-import { ICharacter } from '../../models/character.interface';
+import { ICharacter } from '../../../features/character/models/character.interface';
 
 
 @Component({
