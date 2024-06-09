@@ -3,7 +3,10 @@ import { IEpisode } from '../models/episode.interface';
 import { RickMortyService } from '../../../core/services/rick-morty.service';
 import { IApiResponse } from '../../../shared/models/api-response.interface';
 
-
+/**
+ * Componente de lista de episódios da aplicação.
+ * Exibe uma lista de episódios, com opções de paginação.
+ */
 @Component({
   selector: 'app-episode-list',
   templateUrl: './episode-list.component.html',
@@ -23,9 +26,13 @@ export class EpisodeListComponent {
     this.loadEpisodes();
   }
 
- // Atualiza a lista com os resultados de busca
+  /**
+  * Atualiza a lista com os resultados da resposta da API.
+  *
+  * @param data Dados da resposta da API, contendo a lista de episódios.
+  */
   handleReponseSuccess(data: any): void {
-    if(data.info) {
+    if (data.info) {
       this.episodes = data.results;
       this.nextPage = data.info.next;
       this.prevPage = data.info.prev;
@@ -35,7 +42,9 @@ export class EpisodeListComponent {
     }
   }
 
-  // Carrega personagens com base nos parâmetros de busca e na página atual
+  /**
+ * Carrega os episódios com base na página atual.
+ */
   loadEpisodes(): void {
     this.rickMortyService.getAllEpisodes("").subscribe((data: IApiResponse<IEpisode>) => {
       this.episodes = data.results;
@@ -45,7 +54,7 @@ export class EpisodeListComponent {
   }
 
   onNextPage() {
-    if(this.nextPage) {
+    if (this.nextPage) {
       this.rickMortyService.getNextEpisodes(this.nextPage).subscribe((data: IApiResponse<IEpisode>) => {
         this.episodes = data.results;
         this.nextPage = data.info.next;
@@ -55,7 +64,7 @@ export class EpisodeListComponent {
   }
 
   onPrevPage() {
-    if(this.prevPage) {
+    if (this.prevPage) {
       this.rickMortyService.getNextEpisodes(this.prevPage).subscribe((data: IApiResponse<IEpisode>) => {
         this.episodes = data.results;
         this.nextPage = data.info.next;
