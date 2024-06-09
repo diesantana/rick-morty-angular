@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
+/**
+ * Serviço responsável por gerenciar a sessão do usuário.
+ * Fornece métodos para armazenar e limpar os dados do usuário.
+ */
 @Injectable({
   providedIn: 'root'
 })
