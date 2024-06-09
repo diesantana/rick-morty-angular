@@ -1,15 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { SessionService } from '../../services/session.service';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
-export class ProfileComponent {
-  dataDashboard: {data: string, value: number} [] = [
-    {data: 'Personagens encontrados', value: 826},
-    {data: 'Episódios encontrados', value: 51},
-    {data: 'Localizações: ', value: 126},
-  ];
+export class ProfileComponent implements OnInit {
+  user: any;
+
+  constructor(private sessionService: SessionService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.sessionService.user$.subscribe(user => {
+      this.user = user;
+    });
+  }
+
+  logout(): void {
+    this.sessionService.clearUser();
+    this.router.navigate(['/characters']);
+  }
 
 }
