@@ -12,7 +12,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { CharacterCardComponent } from './components/character-card/character-card.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { EpisodeListComponent } from './pages/episode-list/episode-list.component';
@@ -39,7 +39,8 @@ import { EpisodeTableComponent } from './components/episode-table/episode-table.
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
