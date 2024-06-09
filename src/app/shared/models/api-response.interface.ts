@@ -1,3 +1,6 @@
+/*
+*  interface  para lidar com a estrutura de resposta da API
+*/
 export interface IApiResponse<T> {
   info: {
     count: number;

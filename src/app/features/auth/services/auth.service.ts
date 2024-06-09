@@ -3,6 +3,10 @@ import { environment } from '../../../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, map, of } from 'rxjs';
 
+/**
+ * Serviço de autenticação da aplicação.
+ * Fornece métodos para realizar o login do usuário.
+ */
 @Injectable()
 export class AuthService {
   private baseUrl = environment.serverUrl;
@@ -21,7 +25,7 @@ export class AuthService {
       map(users => users.length > 0 ? users[0] : null),
       catchError(error => {
         console.error('Login error', error);
-        return of(null);
+        return of(null); // Retorna um Observable com valor null em caso de erro
       })
     );
 
