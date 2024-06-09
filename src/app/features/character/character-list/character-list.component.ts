@@ -1,9 +1,8 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { ICharacter } from '../../models/character.interface';
-import { RickMortyService } from '../../services/rick-morty.service';
-import { IApiResponse } from '../../models/api-response.interface';
-import { ISearchParams } from '../../models/search-params.interface';
-import { IEpisode } from '../../models/episode.interface';
+import { ICharacter } from '../../../shared/models/character.interface';
+import { ISearchParams } from '../../../shared/models/search-params.interface';
+import { RickMortyService } from '../../../core/services/rick-morty.service';
+import { IApiResponse } from '../../../shared/models/api-response.interface';
 
 @Component({
   selector: 'app-character-list',

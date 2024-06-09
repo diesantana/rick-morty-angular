@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { ICharacter } from '../../models/character.interface';
-import { CharacterService } from '../../services/character.service';
 import { Router } from '@angular/router';
+import { ICharacter } from '../../../shared/models/character.interface';
+import { CharacterService } from '../services/character.service';
 
 @Component({
   selector: 'app-character-card',
