@@ -4,6 +4,8 @@ import { CharacterCardComponent } from './character-card/character-card.componen
 import { CharacterDetailsComponent } from './character-details/character-details.component';
 import { CharacterListComponent } from './character-list/character-list.component';
 import { CharacterService } from './services/character.service';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -12,12 +14,10 @@ import { CharacterService } from './services/character.service';
     CharacterCardComponent,
     CharacterDetailsComponent,
     CharacterListComponent,
-
-
-
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    InfiniteScrollModule,
   ],
   providers: [
     CharacterService

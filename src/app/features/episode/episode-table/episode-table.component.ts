@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IEpisode } from '../../../shared/models/episode.interface';
+import { IEpisode } from '../models/episode.interface';
 import { RickMortyService } from '../../../core/services/rick-morty.service';
 import { IApiResponse } from '../../../shared/models/api-response.interface';
 

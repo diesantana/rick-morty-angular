@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { ICharacter } from '../../../shared/models/character.interface';
+import { ICharacter } from '../models/character.interface';
 import { ISearchParams } from '../../../shared/models/search-params.interface';
 import { RickMortyService } from '../../../core/services/rick-morty.service';
 import { IApiResponse } from '../../../shared/models/api-response.interface';

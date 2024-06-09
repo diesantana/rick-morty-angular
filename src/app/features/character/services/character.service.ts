@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { ICharacter } from '../../../shared/models/character.interface';
+import { ICharacter } from '../models/character.interface';
 /*
   serviço para armazenar os detalhes do personagem
 */
