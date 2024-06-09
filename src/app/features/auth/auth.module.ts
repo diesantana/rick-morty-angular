@@ -5,6 +5,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
+import { SharedModule } from '../../shared/shared.module';
 
 
 
@@ -16,10 +17,15 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    SharedModule
   ],
   providers: [
     AuthService //Fornecer explicitamente o AuthService no AuthModule
+  ],
+  exports: [
+    LoginComponent,
+    ProfileComponent
   ]
 })
 export class AuthModule { }
