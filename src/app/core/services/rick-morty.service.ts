@@ -6,7 +6,12 @@ import { ICharacter } from '../../features/character/models/character.interface'
 import { IApiResponse } from '../../shared/models/api-response.interface';
 import { ISearchParams } from '../../shared/models/search-params.interface';
 import { IEpisode } from '../../features/episode/models/episode.interface';
-
+/**
+ * Serviço responsável por interagir com a API do Rick and Morty.
+ * Fornece métodos para obter informações sobre personagens e episódios.
+ *
+ * @author Diego Santana
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -15,11 +20,14 @@ export class RickMortyService {
 
   constructor(private http: HttpClient) {}
 
+    /**
+   * Obtém todos os personagens com base nos parâmetros de pesquisa fornecidos.
+   *
+   * @param params - Objeto contendo os parâmetros de pesquisa.
+   * @returns Observable<IApiResponse<ICharacter>> - Um observable que emite a resposta da API contendo a lista de personagens.
+   */
   getAllCharacters(params: ISearchParams): Observable<IApiResponse<ICharacter>> {
-    // Inicializa HttpParams vazio
     let httpParams = new HttpParams();
-
-    // Itera sobre cada chave no objeto de parâmetros
     for(const key in params) {
       // Se o valor do parâmetro não for vazio, adicionamos ao HttpParams
       if(params[key]) {
@@ -40,6 +48,13 @@ export class RickMortyService {
     );
   }
 
+
+    /**
+   * Obtém todos os episódios, com opção de filtrar por ID específico.
+   *
+   * @param id - ID do episódio (opcional).
+   * @returns Observable<IApiResponse<IEpisode>> - Um observable que emite a resposta da API contendo a lista de episódios.
+   */
   getAllEpisodes(id?: string): Observable<IApiResponse<IEpisode>> {
     return this.http.get<IApiResponse<IEpisode>>(`${this.baseUrl}/episode/${id}`).pipe(
       catchError((error: HttpErrorResponse) => {
@@ -54,10 +69,22 @@ export class RickMortyService {
     );
   }
 
+    /**
+   * Obtém os próximos episódios com base na URL fornecida.
+   *
+   * @param nextUrl - URL da próxima página de episódios.
+   * @returns Observable<IApiResponse<IEpisode>> - Um observable que emite a resposta da API contendo a lista de episódios.
+   */
   getNextEpisodes(nextUrl: string): Observable<IApiResponse<IEpisode>>  {
     return this.http.get<IApiResponse<IEpisode>>(nextUrl);
   }
 
+    /**
+   * Obtém os episódios anteriores com base na URL fornecida.
+   *
+   * @param prevUrl - URL da página anterior de episódios.
+   * @returns Observable<IApiResponse<IEpisode>> - Um observable que emite a resposta da API contendo a lista de episódios.
+   */
   getPrevEpisodes(prevUrl: string): Observable<IApiResponse<IEpisode>>  {
     return this.http.get<IApiResponse<IEpisode>>(prevUrl);
   }
