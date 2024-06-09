@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { RickMortyService } from '../../services/rick-morty.service';
 import { IApiResponse } from '../../models/api-response.interface';
-import { ICharacter } from '../../models/character.interface';
 import { ISearchParams } from '../../models/search-params.interface';
 import { IEpisode } from '../../models/episode.interface';
+import { RickMortyService } from '../../../core/services/rick-morty.service';
+import { ICharacter } from '../../models/character.interface';
+
 
 @Component({
   selector: 'app-search-bar',
