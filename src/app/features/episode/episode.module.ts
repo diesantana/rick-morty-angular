@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EpisodeListComponent } from './episode-list/episode-list.component';
 import { EpisodeTableComponent } from './episode-table/episode-table.component';
+import { SharedModule } from '../../shared/shared.module';
 
 
 
@@ -11,7 +12,8 @@ import { EpisodeTableComponent } from './episode-table/episode-table.component';
     EpisodeTableComponent,
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    SharedModule
   ]
 })
 export class EpisodeModule { }
