@@ -3,7 +3,7 @@
 
 ## Visão Geral
 
-Este projeto é um dashboard de personagens e episódios do seriado "Rick and Morty". Ele foi desenvolvido usando Angular e organiza diferentes funcionalidades em módulos distintos.
+Este projeto é uma aplicação web desenvolvida em Angular que exibe informações sobre personagens e episódios do seriado "Rick and Morty". Ele utiliza uma arquitetura modular para organizar as diferentes funcionalidades e um servidor fake API com json-server para simular operações de backend. O projeto inclui funcionalidades como listagem de personagens com scroll infinito, detalhes de personagens, listagem de episódios com paginação, autenticação de usuário com login e perfil.
 
 ## Tecnologias Utilizadas
 - **Angular**: 17.3.0 (versão não-standalone)
