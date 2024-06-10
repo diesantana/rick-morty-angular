@@ -95,7 +95,7 @@ A pagina inicial da aplicação é a listagem de personagens. Com ela, você pod
 - A lista de personagens possui um scroll infinito, quando o usuário rolar a página, novos dados são carregados.
 - Ao clicar em um personagem, será carregada uma página de detalhes com um botão para voltar para a listagem.
 - A tela de episódios é renderizada em formato de tabela, onde você pode filtrar pelo id do episódio, com uma paginação logo abaixo.
-- A tela de login pode ser acessada através do botão na navbar. O formulário de login possui validação de campos. Estamos utilizando o json-server para simular a validação de login. Você pode fazer o login com os seguintes dados:
+- A tela de login pode ser acessada através do botão na navbar. O formulário de login possui validação de campos. A aplicação utiliza o json-server para simular a validação de login. Você pode fazer o login com os seguintes dados:
   - Email: maria@gmail.com ou bob@gmail.com
   - Senha: 1234
   - Obs: Para realizar o login, o json-server deve estar rodando, com o comando: `npm run server`.
@@ -114,3 +114,4 @@ Você pode conferir a execução do projeto em produção através deste link: h
 Diego Santana
 - [LinkedIn](https://www.linkedin.com/in/die-santana/)
 - WhatsApp: +55 11 949 890 078
+- Email: 3c.santana@gmail.com
